@@ -1,7 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
 body {
   padding: 0;
-  margin: 0; }
+  margin: 0;
+  font-family: "Nunito", sans-serif; }
 
 * {
   box-sizing: border-box; }
@@ -138,7 +140,24 @@ body {
     .wrapper main .tab {
       display: flex;
       justify-content: flex-start;
-      align-items: center; }
+      align-items: center;
+      border-bottom: 1px solid #ECEFF1; }
+      .wrapper main .tab div {
+        width: 225px;
+        height: 50px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        color: #737373;
+        font-weight: 600;
+        font-size: 13px;
+        cursor: pointer; }
+        .wrapper main .tab div:hover {
+          background-color: #f4f4f4;
+          color: black; }
+      .wrapper main .tab i {
+        padding: 0 10px;
+        transition: 0.4s; }
     .wrapper main .email {
       display: flex;
       justify-content: flex-start;
