@@ -214,5 +214,10 @@ body {
       justify-content: flex-start;
       align-items: center;
     }
+    .e-list {
+      display: flex;
+      flex-direction: row;
+    }
+
   }
 }
