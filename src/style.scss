@@ -19,6 +19,7 @@ body {
   margin: 0;
   font-family: $fonts;
 }
+
 * {
   box-sizing: border-box;
 }
@@ -371,6 +372,34 @@ body {
       }
 
 
+    }
+    .opened-email {
+      padding: 0 15px;
+      .email-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 20px 0 35px 55px;
+        h1 {
+          margin: 0;
+          padding-right: 10px;
+        }
+      }
+      .email-main {
+        display: flex;
+        .sender-photo {
+          width: 40px;
+        }
+        .email-content {
+          width: 100%;
+          margin-left: 15px;
+          .email-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+        }
+      }
     }
   }
 }
