@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
 
 $primary-color: white;
 $secondary-color: black;
@@ -10,10 +11,13 @@ $space-large: 150px;
 $text-color: grey;
 $breakpoint-tablet: 768px;
 $breakpoint-2: 960px;
+$fonts: 'Nunito', sans-serif;
+$border-bottom: 1px solid #ECEFF1;
 
 body {
   padding: 0;
   margin: 0;
+  font-family: $fonts;
 }
 * {
   box-sizing: border-box;
@@ -184,6 +188,26 @@ body {
       display: flex;
       justify-content: flex-start;
       align-items: center;
+      border-bottom: $border-bottom;
+      div {
+        width: 225px;
+        height: 50px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        color: #737373;
+        font-weight: 600;
+        font-size: 13px;
+        cursor: pointer;
+        &:hover {
+          background-color: #f4f4f4;
+          color:  black
+        }
+      }
+      i {
+        padding: 0 10px;
+        transition: 0.4s;
+      }
     }
     .email {
       display: flex;
