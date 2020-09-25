@@ -43,9 +43,7 @@ body {
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      /* flex: 1; */
       width: 220px;
-      /* border: 1px solid; */
       padding-left: 10px;
       img {
         margin: auto 10px;
@@ -98,39 +96,57 @@ body {
     /* border: 1px solid; */
     padding: 10px;
     grid-column: 1;
+    color: rgb(60,64,67);
+    cursor: pointer;
+    
+  
     .compose {
       box-shadow: 0 0 1px 1px lightgray;
-      width: 120px;
       align-items: center;
       justify-content: space-evenly;
       display: flex;
       border-radius: 50px;
-      padding: 10px;
       user-select: none;
       margin-bottom: 15px;
       transition: linear 0.2s;
+      border-radius: 24px;
+      font-weight: 500;
+      height: 48px;
+      width: 145px;
+      padding: 0 10px 0 0;
       &:hover {
-        box-shadow: 1px 3px 5px 2px lightgray;
+      box-shadow: 0 1px 3px 0 rgba(60,64,67,0.302), 0 4px 8px 3px rgba(60,64,67,0.149);
+      background-color: #fafafb;
+      transition: box-shadow .08s linear,min-width .15s cubic-bezier(0.4,0.0,0.2,1)
       }
       img {
         width: 30px;
         height: 30px;
-      }
     }
+  }
     .menu {
-      /* border: 1px solid; */
       min-height: 400px;
       overflow-y: auto;
+      font-size: .875rem;
+      letter-spacing: .2px;
+      font-family: Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
       .left-tag {
         padding: 5px;
         padding-left: 15px;
         display: flex;
         align-items: center;
         justify-content: flex-start;
+        height: 32px;
         img {
-          height: 20px;
-          width: 20px;
+          height: 16px;
+          width: 16px;
           margin-right: 15px;
+          color: rgb(119, 119, 119);
+          opacity: 0.54;      
+        }
+        &:hover {
+          background-color: rgb(241, 243, 244);
+          border-radius: 0 25px 25px 0;
         }
       }
     }
@@ -140,8 +156,13 @@ body {
   .meet {
     border-top: 2px groove lightgray;
     border-bottom: 1px solid lightgray;
+    font-family: Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+    font-size: .875rem;
+    color: rgb(32,33,36);
     p {
       padding-left: 15px;
+      font-weight: bold;
+
     }
     .left-tag {
       padding: 5px;
@@ -150,9 +171,11 @@ body {
       align-items: center;
       justify-content: flex-start;
       img {
-        height: 20px;
-        width: 20px;
+        height: 16px;
+        width: 16px;
         margin-right: 15px;
+        opacity: 0.54;      
+
       }
     }
   }
@@ -216,3 +239,5 @@ body {
     }
   }
 }
+
+// left-aside-sholpan
