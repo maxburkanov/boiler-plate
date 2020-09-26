@@ -258,11 +258,6 @@ body {
         }
       }
 
-      .email {
-        @extend %align-vertically;
-        justify-content: flex-start;
-      }
-
       .email-list-wrapper {
         width: calc(100vw - 320px);
         position: relative;
@@ -393,6 +388,7 @@ body {
 
       .opened-email {
         position: absolute;
+        display: none;
         background-color: $primary-color;
         width: 100%;
         left: 0;
