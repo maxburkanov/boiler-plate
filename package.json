@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build": "node-sass src/ -o build/ && babel src -d build",
-    "dev": "nodemon --exec 'npm run build'",
-    "start":"webpack-dev-server"
+    "start": "webpack-dev-server",
+    "dev": "nodemon --exec \"npm run build\""
   },
-  "author": "Rachel Sine",
+  "author": "Seytech Team One",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0"

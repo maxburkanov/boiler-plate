@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
-@import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 
 $primary-color: white;
 $secondary-color: black;
@@ -12,7 +12,7 @@ $text-color: grey;
 $breakpoint-tablet: 768px;
 $breakpoint-2: 960px;
 $fonts: 'Nunito', sans-serif;
-$border-bottom: 1px solid #ECEFF1;
+$border-bottom: 1px solid #eceff1;
 
 body {
   padding: 0;
@@ -225,7 +225,7 @@ body {
         cursor: pointer;
         &:hover {
           background-color: #f4f4f4;
-          color:  black
+          color: black;
         }
       }
       i {
