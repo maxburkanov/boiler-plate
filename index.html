@@ -4,9 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="build/style.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all">
-    <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-font-face.min.css" media="all">
-    <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-shims.min.css" media="all">
+    <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all" />
+    <link
+      rel="stylesheet"
+      href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-font-face.min.css"
+      media="all"
+    />
+    <link
+      rel="stylesheet"
+      href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-shims.min.css"
+      media="all"
+    />
     <title>GMAIL CLONE</title>
   </head>
   <body>
@@ -31,7 +39,9 @@
       </header>
       <!-- START LEFT ASIDE BAR -->
       <aside class="sidebar">
-        <div class="compose"><img src="https://www.gstatic.com/images/icons/material/colored_icons/2x/create_32dp.png"/>Compose</div>
+        <div class="compose">
+          <img src="https://www.gstatic.com/images/icons/material/colored_icons/2x/create_32dp.png" />Compose
+        </div>
 
         <div class="menu">
           <div class="inbox left-tag">
@@ -118,68 +128,88 @@
           <div>checkbox</div>
           <div>pagination</div>
         </section>
-        <section class="tab">
-          <div>
-            <i class="fas fa-inbox"></i>
-            Primary
-          </div>
-          <div>
-            <i class="fas fa-user-friends"></i>
-            Social
-          </div>
-          <div>
-            <i class="fas fa-tag"></i>
-            Promotions
-          </div>
-          <div>
-            <i class="fas fa-exclamation-circle"></i>
-            Updates
-          </div>
-        </section>
-
-        <!-- email list start here! -->
-        <section class="email">
-          <div>
-            <div class="email-list-wrapper">
-              <div class="email-list">
-                <div class="dots-img"></div>
-                <div class="email-checkbox">
-                  <input type="checkbox">
-                </div>
-                <div class="email-star"></div>
-                <div class="sender-name">
-                  Seytech Co
-                </div>
-                <div class="sender-email">
-                  support@seytech.com 
-                </div>
-                <div class="message-title">
-                  Enrollment start date
-                </div>
-                <span class="email-dash">-</span>
-                <div class="message">
-                  When you would like to join us?
-                  When you would like to join us?
-                  When you would like to join us?
-                  
-                </div>
-                <div class="email-time">
-                  10:00
-                </div>
+        <section class="mail-window">
+          <section class="tab">
+            <div>
+              <i class="fas fa-inbox"></i>
+              Primary
+            </div>
+            <div>
+              <i class="fas fa-user-friends"></i>
+              Social
+            </div>
+            <div>
+              <i class="fas fa-tag"></i>
+              Promotions
+            </div>
+            <div>
+              <i class="fas fa-exclamation-circle"></i>
+              Updates
+            </div>
+          </section>
+          <!-- email list start here! -->
+          <section class="email">
+              <div class="email-list-wrapper">
+                <div class="email-list">
+                  <div class="dots-img"></div>
+                  <div class="email-checkbox">
+                    <input type="checkbox" />
+                  </div>
+                  <div class="email-star"></div>
+                  <div class="sender-name">Seytech Co</div>
+                  <div class="sender-email">support@seytech.com</div>
+                  <div class="message-title">Enrollment start date</div>
+                  <span class="email-dash">-</span>
+                  <div class="message">
+                    When you would like to join us? When you would like to join us? When you would like to join us?
+                  </div>
+                  <div class="email-time">10:00</div>
 
                   <div class="hover-icons">
-                    <div class="email-archive"><i class='fa fa-archive'></i></div>
-                    <div class="email-delete"><i class='fa fa-trash'></i></div>
-                    <div class="email-mark-as-unread"><i class='fa fa-envelope'></i></div>
-                    <div class="email-snooze"><i class='fa fa-clock-o'></i></div>
+                    <div class="email-archive"><i class="fa fa-archive"></i></div>
+                    <div class="email-delete"><i class="fa fa-trash"></i></div>
+                    <div class="email-mark-as-unread"><i class="fa fa-envelope"></i></div>
+                    <div class="email-snooze"><i class="fa fa-clock-o"></i></div>
                   </div>
-
+                </div>
               </div>
-
+          </section>
+          <section class="opened-email">
+            <div class="email-header">
+              <div class="right-header">
+                <h2 class="subject">Email Subject</h2>
+                <div class="important"></div>
+                <div class="button-tab">
+                  <div class="email-label">inbox</div>
+                  <div class="clear-label">&#x00D7</div>
+                </div>
+              </div>
+              <div class="right-icons">
+                <a href="#"><i class="fas fa-print"></i></a>
+                <a href="#"><i class="fas fa-external-link-square-alt"></i></a>
+              </div>
             </div>
-          </div>
+            <div class="email-main">
+              <div class="sender-photo"><img src="https://ssl.gstatic.com/ui/v1/icons/mail/profile_mask_2x.png" alt="sender-photo"></div>
+              <div class="email-content">
+                <!-- email information -->
+                <div class="email-info">
+                  <div class="sender-info">
+                    <span class="sender-full-name">Sender Sender</span> <span class="sender-email">sender@email.com</span>
+                  </div>
+                  <div class="date-and-tools">
+                    <span>Date</span>
+                    <a href="#" class="star">	<i class="far fa-star"></i> </a>
+                    <a href="#" class="reply"> <i class="fas fa-reply"></i> </a>
+                    <a href="#" class="more-tools"> <i class="fas fa-ellipsis-v"></i> </a>
+                  </div>
+                </div>
+                <div class="receiver">All Receivers</div>
+                <!-- message -->
+              </div>
+            </div>
+          </section>
         </section>
-
       </main>
     </div>
   </body>
