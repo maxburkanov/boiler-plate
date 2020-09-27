@@ -28,6 +28,15 @@ $fonts: 'Nunito', sans-serif;
   text-align: center;
 }
 
+.tabs {
+  width: 94%;
+  height: 3px;
+  position: absolute;
+  bottom: 0;
+  left: 3%;
+  border-radius: 10px 10px 0 0;
+}
+
 %align-vertically {
   display: flex;
   align-items: center;
@@ -238,9 +247,14 @@ body {
         justify-content: flex-start;
         align-items: center;
         border-bottom: $border-bottom;
+<<<<<<< HEAD
         div {
           padding-left: 8px;
           width: 225px;
+=======
+        .tabs-hover {
+          width: 250px;
+>>>>>>> 4fa4bca... some adjustments for tabs added
           height: 50px;
           box-sizing: border-box;
           display: flex;
@@ -248,10 +262,20 @@ body {
           color: #737373;
           font-weight: 600;
           font-size: 13px;
+          position: relative;
           cursor: pointer;
           &:hover {
             background-color: #f4f4f4;
             color: black;
+          }
+          .bottom {
+            width: 94%;
+            height: 3px;
+            // background-color: orangered;
+            position: absolute;
+            bottom: 0;
+            left: 3%;
+            border-radius: 10px 10px 0 0;
           }
         }
         i {
