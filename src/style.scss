@@ -39,6 +39,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: $fonts;
+  
 }
 
 * {
@@ -238,6 +239,7 @@ body {
         align-items: center;
         border-bottom: $border-bottom;
         div {
+          padding-left: 8px;
           width: 225px;
           height: 50px;
           box-sizing: border-box;
@@ -258,18 +260,21 @@ body {
         }
       }
 
+                            // email-list 
+
       .email-list-wrapper {
-        width: calc(100vw - 320px);
+        width: 100%;
         position: relative;
       }
 
       .email-list {
+        background: rgba(242,245,245,0.8);
+        color: #202124;
         width: 100%;
         padding-bottom: 10px;
         padding-top: 10px;
         display: flex;
-        // justify-content: space-between;
-        // align-items: center;
+        align-items: center;
         box-shadow: inset 0 -1px 0 0 rgba(100, 121, 143, 0.122);
         cursor: pointer;
         font-size: 0.875rem;
@@ -282,10 +287,13 @@ body {
             opacity: 0.5;
           }
           .email-checkbox {
-            opacity: 1;
+            opacity: 1;  
           }
           .email-star {
             opacity: 1;
+          }
+          .email-time {
+            display: none;
           }
           .hover-icons {
             div {
@@ -303,21 +311,80 @@ body {
         height: 18px;
         width: 20px;
         opacity: 0;
+        position: absolute;
+        left: -2px;
+      }
+
+      .email-titles {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        text-align: start;
+        width: 25%;
+        
+        
+      }
+
+      .email-text {
+        display: flex;
+        justify-content: flex-start;
+        text-align: start;
+        align-items: center;
+        width: 75%;
+
       }
 
       .email-checkbox {
         padding: 0 10px 0 14px;
         width: 20px;
-        position: relative;
+        position: absolute;
         margin-right: 20px;
         margin-left: -16px;
-        font-weight: bolder;
         height: 20px;
         opacity: 0.5;
+        left: 16px;
+        // background: rgba(117, 118, 115, 0.3);
+        
+        div:hover{
+          background: rgba(117, 118, 115, 0.2);
+          border-radius: 50%;
+          height: 40px;
+          width: 40px;
+          position: absolute;
+          top: 0px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-top: -10px;
+          margin-left: -10px;
+          
+        }  
+        
         input[type='checkbox'] {
           transform: scale(1.3);
-        }
+          }
+        
+      
       }
+
+      .star-image-wrapper {
+          &:hover {
+            background: rgba(117, 118, 115, 0.2);
+            border-radius: 50%;
+            position: absolute;
+            height: 40px;
+            width: 40px;
+            left: 40px;
+            display: block;
+              .email-star {
+                z-index: 1;
+                left: 10px;
+                top: 10px;
+              }
+           }
+
+        }
+      
 
       .email-star {
         background-image: url('https://www.gstatic.com/images/icons/material/system/2x/star_border_black_20dp.png');
@@ -329,62 +396,120 @@ body {
         height: 20px;
         opacity: 0.16;
         margin-right: 20px;
+        position: absolute;
+        left: 50px;
+        top: 10px;
+        
       }
 
       .sender-name {
-        margin-right: 20px;
-        display: flex;
-        max-width: 168px;
         padding-left: 0;
-        padding-right: 32px;
+        text-align: start;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        position: relative;
+        margin-left: 100px;
       }
 
       .sender-email {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        margin-right: 30px;
+        width: 200px;
+        margin-right: 20px;
+        
       }
 
       .message-title {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        text-align: start;
       }
       .email-dash {
-        margin: 0px 20px;
+        margin: 0px 3px;
+      }
+
+      .message-section {
+        display: flex;
+        justify-content: flex-start;
+        overflow-y: hidden;
+        box-sizing: border-box;
       }
 
       .message {
-        margin-right: 40px;
+        margin-right: 140px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        color: #5f6368;;
       }
       .email-time {
         color: #5f6368;
         display: flex;
+        display: inline-block;
         font-size: 0.75rem;
         letter-spacing: 0.3px;
         padding-right: 16px;
         justify-content: flex-end;
+        position: absolute;
+        right: 0;
+        padding-left: 30px;
       }
 
       .hover-icons {
         display: flex;
-        float: right;
         position: absolute;
         right: 0;
-        background-color: white;
-        div {
-          margin: 0px 10px;
-          opacity: 0.7;
+        
+        // div {
+        //   margin: 0px 10px;
+        //   opacity: 0.7;
+        //   display: none;
+          
+          
+        // }
+        .email-archive, .email-delete, .email-mark-as-unread, .email-snooze {
+          color: #7d8183;
+          height: 40px;
           display: none;
+          padding-left: 13px;
+          line-height: 40px;
+          width: 40px;
+          transition: all 0.4 linear;
+          border-radius: 20px;
+          background: rgba(0, 0, 0, 0);
+          // margin-left: 5px;
         }
+        .email-archive:hover, .email-delete:hover, .email-mark-as-unread:hover, .email-snooze:hover {
+          background: rgba(0, 0, 0, 0.1);
+          // margin-left: 20px;
+        }
+
       }
+
+      // Unread message style 
+
+        .unread {
+          .sender-name .sender-email .message-title .email-time {
+            font-weight: 900;
+          }
+          .email-list {
+            background-color: white;
+          }
+          .message {
+            color: #5f6368;
+            font-weight: 200;
+          }
+        }
+
+
+
+
+                      //  email list end!
+                      
+                      
 
       .opened-email {
         position: absolute;
