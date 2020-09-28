@@ -247,38 +247,39 @@ body {
         justify-content: flex-start;
         align-items: center;
         border-bottom: $border-bottom;
-        div {
-          padding-left: 8px;
-          width: 225px;
-        .tabs-hover {
-          width: 250px;
-          height: 50px;
-          box-sizing: border-box;
-          display: flex;
-          align-items: center;
-          color: #737373;
-          font-weight: 600;
-          font-size: 13px;
-          position: relative;
-          cursor: pointer;
-          &:hover {
-            background-color: #f4f4f4;
-            color: black;
+        // div {
+          //   width: 225px;
+          .tabs-hover {
+            padding-left: 8px;
+            width: 250px;
+            height: 50px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            color: #737373;
+            font-weight: 600;
+            font-size: 13px;
+            position: relative;
+            cursor: pointer;
+            &:hover {
+              background-color: #f4f4f4;
+              color: black;
+            }
+            .bottom {
+              width: 94%;
+              height: 3px;
+              // background-color: orangered;
+              position: absolute;
+              bottom: 0;
+              left: 3%;
+              border-radius: 10px 10px 0 0;
+            }
           }
-          .bottom {
-            width: 94%;
-            height: 3px;
-            // background-color: orangered;
-            position: absolute;
-            bottom: 0;
-            left: 3%;
-            border-radius: 10px 10px 0 0;
+          i {
+            padding: 0 10px;
+            transition: 0.4s;
           }
-        }
-        i {
-          padding: 0 10px;
-          transition: 0.4s;
-        }
+        // }
       }
 
                             // email-list 
