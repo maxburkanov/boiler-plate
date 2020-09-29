@@ -42,17 +42,14 @@ $fonts: 'Nunito', sans-serif;
   opacity: 0.54;
   height: 20px;
   width: 20px;
-  &:hover {
-    %hover-icon-functionality {
-      background-color: rgba(32, 33, 36, 0.059);
-      border: none;
-      box-shadow: none;
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
 }
 
+%hover-icon-grey-circle {
+  background: rgba(117, 118, 115, 0.2);
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+}
 // styling code
 
 body {
@@ -304,6 +301,9 @@ body {
       .email-list-wrapper {
         width: 100%;
         position: relative;
+      }
+
+      div[status='template'] {
         display: none;
       }
 
@@ -382,10 +382,7 @@ body {
           // background: rgba(117, 118, 115, 0.3);
 
           div:hover {
-            background: rgba(117, 118, 115, 0.2);
-            border-radius: 50%;
-            height: 40px;
-            width: 40px;
+            @extend %hover-icon-grey-circle;
             position: absolute;
             top: 0px;
             display: flex;
@@ -402,11 +399,8 @@ body {
 
         .star-image-wrapper {
           &:hover {
-            background: rgba(117, 118, 115, 0.2);
-            border-radius: 50%;
+            @extend %hover-icon-grey-circle;
             position: absolute;
-            height: 40px;
-            width: 40px;
             left: 40px;
             display: block;
             .email-star {
@@ -554,6 +548,13 @@ body {
         .fas,
         .far {
           @extend %icon-styling;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+          // &:hover {
+          //   @extend %hover-icon-grey-circle;
+          // }
         }
         .email-header {
           @extend %align-vertically;
@@ -589,8 +590,11 @@ body {
               cursor: pointer;
             }
           }
-          .right-email-header > a:last-child .fas {
-            margin-right: 0;
+          .right-email-header {
+            display: flex;
+            & > a:last-child .fas {
+              margin-right: 0;
+            }
           }
         }
         .email-main {
@@ -630,15 +634,15 @@ body {
             .receiver {
               padding-bottom: 20px;
             }
-            .message {
-              margin-top: 8px;
+            .message-open {
+              padding: 16px 0;
             }
             .button-wrapper {
               display: flex;
-              padding: 16px 0;
+              margin: 20px 0;
               .reply,
               .forward {
-                padding: 0 12px 0 16px;
+                padding: 0 14px 0 16px;
                 margin-right: 12px;
                 height: 36px;
                 font-size: 0.875rem;
@@ -652,12 +656,15 @@ body {
                   margin-right: 8px;
                   display: flex;
                   align-items: center;
+                  position: relative;
                 }
                 .forward-icon {
                   display: inline-block;
                   background-image: url(https://www.gstatic.com/images/icons/material/system/1x/forward_black_20dp.png);
                   @extend %non-font-awesome-icons;
                   margin-right: 8px;
+                  bottom: 10px;
+                  left: 10px;
                 }
               }
             }

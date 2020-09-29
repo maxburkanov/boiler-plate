@@ -25,12 +25,11 @@ fetch('https://polar-reaches-49806.herokuapp.com/api?page=1&category=primary')
 
 function onReady(fetchedData) {
   myData = fetchedData;
-  social = toSocial(fetchedData);
-  promotions = toPromotions(fetchedData);
-  updates = toUpdates(fetchedData);
-  trigger.click();
-  addIdToData(myData);
-  listAllEmails(fetchedData);
+  myData = addIdToData(myData);
+  social = toSocial(myData);
+  promotions = toPromotions(myData);
+  updates = toUpdates(myData);
+  listAllEmails(myData);
 }
 
 //event Listener on tabs
@@ -56,16 +55,28 @@ function tabsClicked(e) {
 // HELPER FUNCTION ADDED NEW
 function detectWhichTab(e) {
   let target = e.getAttribute('area-label');
-  return target == 'Primary' ? myData : target == 'Social' ? social : target == 'Promotions' ? promotions : updates;
+  let subData;
+  switch (target) {
+    case 'Social':
+      subData = social;
+      break;
+    case 'Promotions':
+      subData = promotions;
+      break;
+    case 'Updates':
+      subData = updates;
+      break;
+    default:
+      subData = myData;
+  }
+  return subData;
 }
+
 // HELPER FUNCTION ADDED NEW
 function removeAllFromDom() {
-  let lastChild = main.lastElementChild;
-  while (main.firstElementChild) {
-    main.removeChild(main.firstChild);
+  while (!main.lastElementChild.hasAttribute('status')) {
+    main.removeChild(main.lastElementChild);
   }
-  main.appendChild(lastChild);
-  return lastChild;
 }
 
 //HELPER FUNCTION ADDED NEW
@@ -84,7 +95,7 @@ function tabsColor(curr) {
 }
 
 function listAllEmails(data) {
-  let list = document.querySelector('.email-list-wrapper');
+  let list = document.querySelector('[status="template"]');
   const monthNames = [
     'January',
     'February',
@@ -101,22 +112,23 @@ function listAllEmails(data) {
   ];
   for (let i = 0; i < data.items.length; i++) {
     let anEmail = list.cloneNode(true);
+    main.appendChild(anEmail);
     anEmail.style.display = 'block';
-    // let senderName = anEmail.children[0].children[3]
-    let senderName = document.querySelectorAll('.sender-name')[i];
-    let senderEmail = document.querySelectorAll('.sender-email')[i];
-    let messageTitle = document.querySelectorAll('.message-title')[i];
-    let message = document.querySelectorAll('.message')[i];
-    let emailTime = document.querySelectorAll('.email-time')[i];
+    anEmail.removeAttribute('status');
+    let senderName = document.querySelectorAll('.sender-name')[i + 1];
+    let senderEmail = document.querySelectorAll('.sender-email')[i + 1];
+    let messageTitle = document.querySelectorAll('.message-title')[i + 1];
+    let message = document.querySelectorAll('.message')[i + 1];
+    let emailTime = document.querySelectorAll('.email-time')[i + 1];
     let emailDate = new Date(data.items[i].date);
     let stringDate = `${emailDate.getDate()} ${monthNames[emailDate.getMonth()].substr(0, 3)}`;
     senderName.innerHTML = data.items[i].senderName;
+    senderEmail.innerHTML = data.items[i].senderEmail;
     messageTitle.innerHTML = data.items[i].messageTitle;
     message.innerHTML = data.items[i].messages[0].message;
     emailTime.innerHTML = stringDate;
-    anEmail.setAttribute('data-id', i);
+    anEmail.setAttribute('data-id', data.items[i].id);
     anEmail.addEventListener('click', openEmail);
-    main.appendChild(anEmail);
   }
 }
 
@@ -124,6 +136,7 @@ function addIdToData(data) {
   for (let i = 0; i < data.items.length; i++) {
     data.items[i].id = i;
   }
+  return data;
 }
 
 function toSocial(data) {
@@ -136,6 +149,7 @@ function toSocial(data) {
   social.total = social.items.length;
   return social;
 }
+
 //THIS SECTION IS FOR FILTERING RAW DATA
 function toPromotions(data) {
   let promotions = {};
@@ -160,14 +174,31 @@ function toUpdates(data) {
   return updates;
 }
 
-//FILTERING RAW DATA ENDS
-var trigger = tabs.children[0];
+// OPEN INDIVIDUAL EMAIL
+function openEmail(event) {
+  let currElement = event.target;
+  let curID = getIdOfEmailClicked(currElement);
+  let openWindowEmail = document.querySelector('.opened-email');
+  let email;
+  if (myData) {
+    removeAllFromDom();
+    let openWindowEmail = document.querySelector('.opened-email');
+    openWindowEmail.style.display = 'block';
+    let senderName = document.querySelector('.sender-full-name');
+    senderName.innerHTML = myData.items[curID].senderName;
+    let emailAddress = document.querySelector('.sender-email-open');
+    emailAddress.innerHTML = myData.items[curID].senderEmail;
+    let emailSubject = document.querySelector('.subject');
+    emailSubject.innerHTML = myData.items[curID].messageTitle;
+    let emailMessage = document.querySelector('.message-open');
+    emailMessage.innerHTML = myData.items[curID].messages[0].message;
+  }
+}
 
-document.querySelector('.inbox').addEventListener('click', () => {
-  console.log(social);
-});
-
-function openEmail() {
-  let emailID = this.data - id;
-  console.log(emailID);
+function getIdOfEmailClicked(element) {
+  let checkedElement = element.parentElement;
+  while (!checkedElement.hasAttribute('data-id')) {
+    checkedElement = checkedElement.parentElement;
+  }
+  return checkedElement.getAttribute('data-id');
 }
