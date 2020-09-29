@@ -8,13 +8,10 @@ let social;
 let promotions;
 let updates;
 let newObj = {};
-
 for (let i = 0; i < tabs.children.length; i++) {
   tabs.children[i].setAttribute('area-label', tabs.children[i].innerText)
   tabsBorder[i].setAttribute('area-label', tabs.children[i].innerText)
 }
-  
-
 fetch('https://polar-reaches-49806.herokuapp.com/api?page=1&category=primary')
 .then(response => response.json())
 .then((data)=>{
@@ -22,23 +19,17 @@ fetch('https://polar-reaches-49806.herokuapp.com/api?page=1&category=primary')
 .catch((error) => {
   console.log(error);
 });
-  
-  
 function onReady(fetchedData){
   myData = fetchedData
   social = toSocial(fetchedData)
   promotions = toPromotions(fetchedData)
   updates = toUpdates(fetchedData)
   trigger.click()
-  // console.log(myData)
   addIdToData(myData)
-              for (let k in myData){
-                newObj[k] = myData[k]
-              }
+  listAllEmails(fetchedData)  
 }
 //event Listener on tabs  
 tabs.addEventListener('click', tabsClicked)
-
 function tabsClicked(e){
   if (e.target.nodeName !== 'DIV') return
   let curr = e.target
@@ -50,7 +41,6 @@ function tabsClicked(e){
     }
     tabsBorder[i].style.backgroundColor = 'transparent'
   }
-
   curr.children[1].classList.add('tabs')
   curr.style.color = tabsColor(curr)
   curr.children[1].style.backgroundColor = tabsColor(curr)
@@ -76,15 +66,16 @@ function removeAllFromDom(){
 }
 //HELPER FUNCTION ADDED NEW
 function tabsColor(curr) {
+  /// loop tabs ad remove active class
+  curr.classList.add('active')
   return curr.getAttribute('area-label') == 'Primary'? '#D93025' 
   : curr.getAttribute('area-label') == 'Social'? '#1A73E8' 
   : curr.getAttribute('area-label') == 'Promotions'? '#188038' 
   : curr.getAttribute('area-label') == 'Updates' ? '#DD7607'
   : 'none'
 }
-
 function listAllEmails(data){ 
-  let list = document.querySelector('.email-list')
+  let list = document.querySelector('.email-list-wrapper')
   const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"];
   for (let i = 0; i < data.items.length; i++) {
@@ -111,21 +102,11 @@ function listAllEmails(data){
     }
   }
 }
-
 function addIdToData(data) {
   for (let i = 0; i < data.items.length; i++) {
     data.items[i].id = i
   }
 }
-
-
-
-
-
-
-
-
-
 function toSocial(data){
   let social = {}
   social.items = data.items.filter((i)=>{
@@ -147,7 +128,6 @@ function toPromotions(data){
   promotions.total = promotions.items.length
   return promotions
 }
-
 function toUpdates(data){
   let updates = {}
   updates.items = data.items.filter((i)=>{
@@ -159,6 +139,8 @@ function toUpdates(data){
   return updates
 }
 //FILTERING RAW DATA ENDS
-
 var trigger = tabs.children[0];
 
+document.querySelector('.inbox').addEventListener('click', ()=>{
+  console.log(social)
+})
