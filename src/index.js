@@ -9,6 +9,7 @@ let social;
 let promotions;
 let updates;
 let newObj = {};
+const searchBar = document.querySelector('#search')
 
 for (let i = 0; i < tabs.children.length; i++) {
   tabs.children[i].setAttribute('area-label', tabs.children[i].innerText);
@@ -279,3 +280,29 @@ document.getElementById('selectAll').addEventListener(
   },
   false
 );
+
+//EVENT LISTENER FOR SEARCH BAR -- OUR LOCAL SEARCH ENGINE
+let drop = document.querySelector('.middle div')
+searchBar.addEventListener('input', (e)=>{
+  newObj.items = [];
+  for (let i = 0; i < myData.items.length; i++){
+    for (let k in myData.items[i]){
+      if (typeof myData.items[i][k] == 'string' && k !== 'date'){
+        if(e.target.value == '') {
+          newObj.items.length = 0;
+          newObj.total = newObj.items.length
+          return
+        } 
+        if (myData.items[i][k].toLowerCase().includes(e.target.value.toLowerCase())) {
+          newObj.items.push(myData.items[i])
+        }
+      }
+    }
+  }
+  newObj.next = myData.next
+  newObj.total = newObj.items.length
+  console.log(newObj)
+  if (!drop.classList.contains('search-drop-result')){
+    drop.classList.toggle('search-drop-result')
+  }
+})

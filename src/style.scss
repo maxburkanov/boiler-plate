@@ -67,11 +67,18 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   header {
+<<<<<<< HEAD
     grid-column: 1 / span 5;
     @extend %align-vertically;
     justify-content: space-between;
     border-bottom: 1px solid #e5e5e5;
 
+=======
+    grid-column: 1/span 5;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    
+>>>>>>> 9bd4ce6... 3/3 of conflicts resolved, merging...
     .header-icon {
       max-width: 20px;
       max-height: 20px;
@@ -86,6 +93,7 @@ body {
       justify-content: flex-start;
       width: 220px;
       padding-left: 10px;
+      grid-column: 1;
       img {
         margin: auto 10px;
       }
@@ -99,15 +107,18 @@ body {
       @extend %align-vertically;
       justify-content: flex-end;
       flex: 1;
+      grid-column: 5;
       img {
         margin: 0 10px;
       }
     }
 
     .middle {
-      flex: 5;
+      grid-column: 2 / span 3;
+      margin-left: 8px;
+      position: relative;
       input {
-        background: url('../images/search-icon.png') no-repeat;
+        background: url(../images/search-icon.png) no-repeat;
         background-size: 18px;
         background-position: left center;
         background-position-x: 10px;
@@ -123,12 +134,24 @@ body {
         max-width: 720px;
         width: 90%;
         margin-top: 10px;
-        margin-left: 60px;
+        margin-left: -6px;
         &:focus {
           border: none;
           background-color: transparent;
-          box-shadow: 0 1px 1px 2px lightgray;
+          box-shadow: 0 2px 5px 1px lightgrey;
         }
+      }
+      .search-drop-result {
+        height: 330px;
+        width: 720px;
+        background-color: white;
+        position: absolute;
+        left: -6px;
+        top: 54px;
+        z-index: 1;
+        overflow-x: auto;
+        border-radius: 0 0 8px 8px;
+        border-top: $border-bottom;
       }
     }
   }
