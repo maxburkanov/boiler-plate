@@ -202,3 +202,8 @@ function getIdOfEmailClicked(element) {
   }
   return checkedElement.getAttribute('data-id');
 }
+
+// Tool
+document.getElementById('selectAll').addEventListener('click', function(ev) {
+  ev.target.parentNode.parentNode.classList[ev.target.checked ? 'add' : 'remove']('selected');
+}, false);
