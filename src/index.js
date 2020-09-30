@@ -31,6 +31,7 @@ function onReady(fetchedData) {
   promotions = toPromotions(myData);
   updates = toUpdates(myData);
   listAllEmails(myData);
+  tabs.children[0].click()
 }
 
 //event Listener on tabs
@@ -84,15 +85,14 @@ function removeAllFromDom() {
 function tabsColor(curr) {
   /// loop tabs ad remove active class
   curr.classList.add('active');
-  return curr.getAttribute('area-label') == 'Primary'
+  let current = curr.getAttribute('area-label') 
+  return current == 'Primary'
     ? '#D93025'
-    : curr.getAttribute('area-label') == 'Social'
+    : current == 'Social'
     ? '#1A73E8'
-    : curr.getAttribute('area-label') == 'Promotions'
+    : current == 'Promotions'
     ? '#188038'
-    : curr.getAttribute('area-label') == 'Updates'
-    ? '#DD7607'
-    : 'none';
+    : '#DD7607'; //then it's gotta be updates
 }
 
 function listAllEmails(data) {
