@@ -144,9 +144,8 @@ body {
 
     .compose {
       box-shadow: 0 0 1px 1px lightgray;
-      align-items: center;
+      @extend %align-vertically;
       justify-content: space-evenly;
-      display: flex;
       border-radius: 50px;
       user-select: none;
       margin-bottom: 15px;
@@ -175,8 +174,7 @@ body {
       .left-tag {
         padding: 5px;
         padding-left: 15px;
-        display: flex;
-        align-items: center;
+        @extend %align-vertically;
         justify-content: flex-start;
         height: 32px;
         img {
@@ -208,8 +206,7 @@ body {
     .left-tag {
       padding: 5px;
       padding-left: 15px;
-      display: flex;
-      align-items: center;
+      @extend %align-vertically;
       justify-content: flex-start;
       img {
         height: 16px;
@@ -225,9 +222,8 @@ body {
     /* border: 1px solid; */
     font-family: 'Roboto', sans-serif;
     .hangout-user {
-      display: flex;
+      @extend %align-vertically;
       justify-content: space-between;
-      align-items: center;
       div:first-child {
         display: flex;
         align-items: center;
@@ -245,7 +241,7 @@ body {
     width: 100%;
 
     .tool {
-      display: flex;
+      @extend %align-vertically;
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid #e5e5e5;
@@ -399,17 +395,15 @@ body {
       position: relative;
 
       .tab {
-        display: flex;
+        @extend %align-vertically;
         justify-content: flex-start;
-        align-items: center;
         border-bottom: $border-bottom;
         .tabs-hover {
           padding-left: 8px;
           width: 225px;
           height: 50px;
           box-sizing: border-box;
-          display: flex;
-          align-items: center;
+          @extend %align-vertically;
           color: #737373;
           font-weight: 600;
           font-size: 13px;
@@ -447,13 +441,13 @@ body {
         overflow: scroll;
         height: 100vh;
       }
+
       .email-list-wrapper {
         width: 100%;
         position: relative;
-      }
-
-      div[status='template'] {
-        display: none;
+        &[status='template'] {
+          display: none;
+        }
       }
 
       .email-list {
@@ -462,8 +456,7 @@ body {
         width: 100%;
         padding-bottom: 10px;
         padding-top: 10px;
-        display: flex;
-        align-items: center;
+        @extend %align-vertically;
         box-shadow: inset 0 -1px 0 0 rgba(100, 121, 143, 0.122);
         cursor: pointer;
         font-size: 0.875rem;
@@ -504,17 +497,15 @@ body {
         }
 
         .email-titles {
-          display: flex;
+          @extend %align-vertically;
           justify-content: flex-start;
-          align-items: center;
           text-align: start;
           width: 25%;
         }
 
         .email-text {
-          display: flex;
+          @extend %align-vertically;
           justify-content: flex-start;
-          text-align: start;
           align-items: center;
           width: 75%;
         }
@@ -533,8 +524,7 @@ body {
           div:hover {
             @extend %hover-icon-grey-circle;
             top: 0px;
-            display: flex;
-            align-items: center;
+            @extend %align-vertically;
             justify-content: center;
             margin-top: -10px;
             margin-left: -10px;
@@ -633,13 +623,6 @@ body {
           display: flex;
           position: absolute;
           right: 0;
-
-          // div {
-          //   margin: 0px 10px;
-          //   opacity: 0.7;
-          //   display: none;
-
-          // }
           .email-archive,
           .email-delete,
           .email-mark-as-unread,
@@ -653,14 +636,12 @@ body {
             transition: all 0.4 linear;
             border-radius: 20px;
             background: rgba(0, 0, 0, 0);
-            // margin-left: 5px;
           }
           .email-archive:hover,
           .email-delete:hover,
           .email-mark-as-unread:hover,
           .email-snooze:hover {
             background: rgba(0, 0, 0, 0.1);
-            // margin-left: 20px;
           }
         }
       }
@@ -668,15 +649,19 @@ body {
       // Unread message style
 
       .unread {
-        .sender-name .sender-email .message-title .email-time {
-          font-weight: 900;
-        }
         .email-list {
           background-color: white;
-        }
-        .message {
-          color: #5f6368;
-          font-weight: 200;
+          .sender-name,
+          .sender-email,
+          .message-title,
+          .email-time {
+            font-weight: 900;
+            color: $secondary-color;
+          }
+          .message {
+            color: #5f6368;
+            font-weight: 200;
+          }
         }
       }
 
@@ -708,8 +693,7 @@ body {
           justify-content: space-between;
           margin: 20px 0 35px 55px;
           .left-email-header {
-            display: flex;
-            align-items: center;
+            @extend %align-vertically;
             h2 {
               margin: 0;
               padding-right: 10px;
@@ -764,9 +748,8 @@ body {
             width: 100%;
             margin-left: 15px;
             .email-info {
-              display: flex;
+              @extend %align-vertically;
               justify-content: space-between;
-              align-items: center;
               .sender-full-name {
                 font-size: $size;
                 font-weight: bold;
@@ -793,16 +776,14 @@ body {
                 margin-right: 12px;
                 height: 36px;
                 font-size: 0.875rem;
-                align-self: center;
-                display: flex;
+                @extend %align-vertically;
                 align-items: center;
                 cursor: pointer;
                 border: 1px solid $text-color;
                 border-radius: 4px;
                 & i:only-child {
                   margin-right: 8px;
-                  display: flex;
-                  align-items: center;
+                  @extend %align-vertically;
                   position: relative;
                 }
                 .forward-icon {

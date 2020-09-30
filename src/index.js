@@ -74,7 +74,9 @@ function detectWhichTab(e) {
 
 // HELPER FUNCTION ADDED NEW
 function removeAllFromDom() {
+  main = document.querySelector('.email');
   while (!main.lastElementChild.hasAttribute('status')) {
+    console.log('hi');
     main.removeChild(main.lastElementChild);
   }
 }
@@ -96,6 +98,7 @@ function tabsColor(curr) {
 
 function listAllEmails(data) {
   let list = document.querySelector('[status="template"]');
+
   const monthNames = [
     'January',
     'February',
@@ -110,16 +113,23 @@ function listAllEmails(data) {
     'November',
     'December',
   ];
-  for (let i = 0; i < data.items.length; i++) {
+  for (let i = 0; i < 100; i++) {
     let anEmail = list.cloneNode(true);
     main.appendChild(anEmail);
     anEmail.style.display = 'block';
     anEmail.removeAttribute('status');
-    let senderName = document.querySelectorAll('.sender-name')[i + 1];
-    let senderEmail = document.querySelectorAll('.sender-email')[i + 1];
-    let messageTitle = document.querySelectorAll('.message-title')[i + 1];
-    let message = document.querySelectorAll('.message')[i + 1];
-    let emailTime = document.querySelectorAll('.email-time')[i + 1];
+
+    if (!data.items[i].isRead) {
+      anEmail.classList.add('unread');
+    } else if (data.items[i].isRead) {
+      anEmail.classList.remove('unread');
+    }
+
+    let senderName = document.querySelectorAll('.sender-name')[i];
+    let senderEmail = document.querySelectorAll('.sender-email')[i];
+    let messageTitle = document.querySelectorAll('.message-title')[i];
+    let message = document.querySelectorAll('.message')[i];
+    let emailTime = document.querySelectorAll('.email-time')[i];
     let emailDate = new Date(data.items[i].date);
     let stringDate = `${emailDate.getDate()} ${monthNames[emailDate.getMonth()].substr(0, 3)}`;
     senderName.innerHTML = data.items[i].senderName;
@@ -180,13 +190,16 @@ function openEmail(event) {
   //What is the class name of the currElement?
   //If it is bucket, star, or spam then do other funcitons and return
   //else continue executing the below code
-  let curID = getIdOfEmailClicked(currElement);
   let openWindowEmail = document.querySelector('.opened-email');
   let email;
   if (myData) {
+    let curID = getIdOfEmailClicked(currElement);
+    myData.items[curID].isRead = true;
+    console.log(myData.items[curID]);
     removeAllFromDom();
+    listAllEmails(myData);
     let openWindowEmail = document.querySelector('.opened-email');
-    openWindowEmail.style.display = 'block';
+    // openWindowEmail.style.display = 'block';
     let senderName = document.querySelector('.sender-full-name');
     senderName.innerHTML = myData.items[curID].senderName;
     let emailAddress = document.querySelector('.sender-email-open');
