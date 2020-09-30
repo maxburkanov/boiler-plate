@@ -177,6 +177,9 @@ function toUpdates(data) {
 // OPEN INDIVIDUAL EMAIL
 function openEmail(event) {
   let currElement = event.target;
+  //What is the class name of the currElement?
+  //If it is bucket, star, or spam then do other funcitons and return
+  //else continue executing the below code
   let curID = getIdOfEmailClicked(currElement);
   let openWindowEmail = document.querySelector('.opened-email');
   let email;
