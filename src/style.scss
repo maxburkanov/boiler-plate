@@ -70,15 +70,21 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    
     .header-icon {
       max-width: 20px;
       max-height: 20px;
+      
       .lg {
         max-width: 30px;
         max-height: 30px;
+        
       }
+      
+      
     }
     .left {
+      
       display: flex;
       justify-content: flex-start;
       align-items: center;
@@ -102,6 +108,7 @@ body {
         margin: 0 10px;
       }
     }
+
     .middle {
       flex: 5;
       input {
@@ -109,17 +116,19 @@ body {
         background-size: 18px;
         background-position: left center;
         background-position-x: 10px;
-        background-color: rgba(242, 245, 245, 0.8);
-        padding-top: 20px;
-        padding-bottom: 20px;
+        background-color: #f1f3f4;  
+        padding-top: 16px;
+        padding-bottom: 16px;
         padding-left: 40px;
         padding-right: 20px;
         border-radius: 8px;
         border: none;
         outline: none;
         min-width: 240px;
-        max-width: 600px;
+        max-width: 720px;
         width: 90%;
+        margin-top: 10px;
+        margin-left: 60px;
         &:focus {
           border: none;
           background-color: transparent;
