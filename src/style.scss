@@ -8,6 +8,7 @@ $text-color: rgb(128, 128, 128);
 $border-bottom: 1px solid rgb(236, 239, 241);
 $icon-color-default: rgb(102, 102, 102);
 $icon-color-hovered: rgb(102, 102, 102);
+$hover-background: rgba(117, 118, 115, 0.2);
 
 // sizes and fonts
 $padding-main: 20px;
@@ -67,18 +68,13 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   header {
-<<<<<<< HEAD
-    grid-column: 1 / span 5;
+    
     @extend %align-vertically;
-    justify-content: space-between;
-    border-bottom: 1px solid #e5e5e5;
-
-=======
     grid-column: 1/span 5;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    border-bottom: 1px solid #e5e5e5;
     
->>>>>>> 9bd4ce6... 3/3 of conflicts resolved, merging...
     .header-icon {
       max-width: 20px;
       max-height: 20px;
@@ -151,7 +147,39 @@ body {
         z-index: 1;
         overflow-x: auto;
         border-radius: 0 0 8px 8px;
+        box-shadow: 0 5px 5px 1px lightgrey;
         border-top: $border-bottom;
+        box-sizing: border-box;
+        .searched-email {
+          display: flex;
+          justify-content: space-between;
+          font-size: 14px;
+          &:hover {
+            box-shadow:  1px 1px 6px 2px   $hover-background;
+            cursor: pointer;
+          }
+          .left-side{
+            display: flex;
+            i {
+              margin: 15px;
+              color: #777;
+            }
+            .searched-message{
+              // display: flex;
+              .searched-top{}
+              .searched-bottom{
+                color: #777;
+                font-size: 12px;
+                font-weight: 600;
+                font-family: Arial, sans-serif;
+              }
+            }
+          }
+          .right-side{
+            margin: 15px;
+          }
+
+        }
       }
     }
   }

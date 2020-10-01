@@ -2,13 +2,14 @@ const test = 'This is a text';
 //this is test bellow
 let myData;
 let currDisplayedData;
+let dropdownForSearch = document.querySelector('.search-displayer')
 let main = document.querySelector('.email');
 let tabs = document.querySelector('.tab');
 let tabsBorder = document.querySelectorAll('.bottom');
 let social;
 let promotions;
 let updates;
-let newObj = {};
+let searchedResult = {};
 const searchBar = document.querySelector('#search')
 
 for (let i = 0; i < tabs.children.length; i++) {
@@ -283,26 +284,78 @@ document.getElementById('selectAll').addEventListener(
 
 //EVENT LISTENER FOR SEARCH BAR -- OUR LOCAL SEARCH ENGINE
 let drop = document.querySelector('.middle div')
-searchBar.addEventListener('input', (e)=>{
-  newObj.items = [];
+let searchMiddle = document.querySelector('.middle')
+
+searchBar.addEventListener('input', getSearchCriteria)
+
+function getSearchCriteria(e) {
+  if (e.target.value == '') {
+    dropdownForSearch.innerHTML = ''
+  }
+
+  searchedResult.items = [];
   for (let i = 0; i < myData.items.length; i++){
     for (let k in myData.items[i]){
       if (typeof myData.items[i][k] == 'string' && k !== 'date'){
-        if(e.target.value == '') {
-          newObj.items.length = 0;
-          newObj.total = newObj.items.length
+        if(e.target.value === '') {
+          searchedResult.items.length = 0;
+          searchedResult.total = searchedResult.items.length
           return
         } 
-        if (myData.items[i][k].toLowerCase().includes(e.target.value.toLowerCase())) {
-          newObj.items.push(myData.items[i])
+        if (myData.items[i][k].toLowerCase().includes(e.target.value.trim().toLowerCase())) {
+          searchedResult.items.push(myData.items[i])
         }
+        
       }
+          else {
+            if (Array.isArray(myData.items[i][k])) {
+              for (let j = 0; j < myData.items[i][k].length; j++) {
+                console.log('this', myData.items[i][k])
+                 //       console.log('this',myData.items[i][k])
+                  if(myData.items[i][k][0].message.toLowerCase().includes(e.target.value.trim().toLowerCase())){
+                    searchedResult.items.push(myData.items[i])
+                  }
+              }
+            
+            }
+          }
+
     }
   }
-  newObj.next = myData.next
-  newObj.total = newObj.items.length
-  console.log(newObj)
+  searchedResult.next = searchedResult.next
+  searchedResult.total = searchedResult.items.length
+  console.log(e.target.value, searchedResult)
   if (!drop.classList.contains('search-drop-result')){
     drop.classList.toggle('search-drop-result')
   }
-})
+// })
+  renderToDropMenu()
+}
+
+function renderToDropMenu () {
+  dropdownForSearch.innerHTML = ''
+
+  for (let i = 0; i < searchedResult.total; i++) {
+    let date = new Date(searchedResult.items[i].date)
+    let div = document.createElement('div')
+    div.className = 'searched-email'
+    div.innerHTML = `
+      <div class="left-side">
+        <i class="fas fa-envelope"></i>
+        <div class="searched-message">
+          <div class="searched-top">
+            ${searchedResult.items[i].messageTitle}
+          </div>
+          <div class="searched-bottom">
+          ${searchedResult.items[i].senderName}
+          </div>
+        </div>
+      </div>
+      <div class="right-side">
+        ${date.getMonth()}/${date.getDate()}/${date.getFullYear()%100}
+      </div>
+    `
+    dropdownForSearch.appendChild(div)
+  }
+}
+
