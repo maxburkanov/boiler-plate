@@ -1,6 +1,7 @@
 const test = 'This is a text';
 //this is test bellow
 let myData;
+let currDisplayedData;
 let main = document.querySelector('.email');
 let tabs = document.querySelector('.tab');
 let tabsBorder = document.querySelectorAll('.bottom');
@@ -48,7 +49,6 @@ function tabsClicked(e) {
   curr.children[1].classList.add('tabs');
   curr.style.color = tabsColor(curr);
   curr.children[1].style.backgroundColor = tabsColor(curr);
-  removeAllFromDom();
   listAllEmails(detectWhichTab(curr));
 }
 
@@ -76,7 +76,6 @@ function detectWhichTab(e) {
 function removeAllFromDom() {
   main = document.querySelector('.email');
   while (!main.lastElementChild.hasAttribute('status')) {
-    console.log('hi');
     main.removeChild(main.lastElementChild);
   }
 }
@@ -97,8 +96,48 @@ function tabsColor(curr) {
 }
 
 function listAllEmails(data) {
+  currDisplayedData = data;
+  removeAllFromDom();
   let list = document.querySelector('[status="template"]');
 
+  for (let i = 0; i < 20; i++) {
+    let anEmail = list.cloneNode(true);
+    anEmail.style.display = 'block';
+    anEmail.removeAttribute('status');
+
+    if (!data.items[i].isRead) {
+      anEmail.classList.add('unread');
+    } else if (data.items[i].isRead) {
+      anEmail.classList.remove('unread');
+    }
+
+    let senderName = anEmail.querySelector('.sender-name');
+    let senderEmail = anEmail.querySelector('.sender-email');
+    let messageTitle = anEmail.querySelector('.message-title');
+    let message = anEmail.querySelector('.message');
+    let emailTime = anEmail.querySelector('.email-time');
+    let emailDate = new Date(data.items[i].date);
+    let stringDate = formatDate(emailDate, 'forEmailList');
+    senderName.innerHTML = data.items[i].senderName;
+    senderEmail.innerHTML = data.items[i].senderEmail;
+    messageTitle.innerHTML = data.items[i].messageTitle;
+    message.innerHTML = data.items[i].messages[0].message;
+    emailTime.innerHTML = stringDate;
+    anEmail.setAttribute('data-id', data.items[i].id);
+    anEmail.addEventListener('click', openEmail);
+    main.appendChild(anEmail);
+  }
+}
+
+function addIdToData(data) {
+  for (let i = 0; i < data.items.length; i++) {
+    data.items[i].id = i;
+  }
+  return data;
+}
+
+function formatDate(date, format) {
+  let result = '';
   const monthNames = [
     'January',
     'February',
@@ -113,40 +152,29 @@ function listAllEmails(data) {
     'November',
     'December',
   ];
-  for (let i = 0; i < 100; i++) {
-    let anEmail = list.cloneNode(true);
-    main.appendChild(anEmail);
-    anEmail.style.display = 'block';
-    anEmail.removeAttribute('status');
-
-    if (!data.items[i].isRead) {
-      anEmail.classList.add('unread');
-    } else if (data.items[i].isRead) {
-      anEmail.classList.remove('unread');
+  const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const acceptedFormats = ['forEmailList', 'forOpennedEmail', 'forSearResults'];
+  if (acceptedFormats.includes(format)) {
+    switch (format) {
+      case acceptedFormats[0]:
+        result = `${date.getDate()} ${monthNames[date.getMonth()].substr(0, 3)}`;
+        break;
+      case acceptedFormats[1]:
+        result = `
+        ${date.getDate()} 
+        ${monthNames[date.getMonth()].substr(0, 3)} 
+        ${date.getFullYear()}, 
+        ${date.getHours()}:${date.getMinutes()}
+        `;
+        break;
+      case acceptedFormats[1]:
+        result = `${date.getMonth()} ${date.getDate()} ${date.getFullYear() % 100}`;
+        break;
     }
-
-    let senderName = document.querySelectorAll('.sender-name')[i];
-    let senderEmail = document.querySelectorAll('.sender-email')[i];
-    let messageTitle = document.querySelectorAll('.message-title')[i];
-    let message = document.querySelectorAll('.message')[i];
-    let emailTime = document.querySelectorAll('.email-time')[i];
-    let emailDate = new Date(data.items[i].date);
-    let stringDate = `${emailDate.getDate()} ${monthNames[emailDate.getMonth()].substr(0, 3)}`;
-    senderName.innerHTML = data.items[i].senderName;
-    senderEmail.innerHTML = data.items[i].senderEmail;
-    messageTitle.innerHTML = data.items[i].messageTitle;
-    message.innerHTML = data.items[i].messages[0].message;
-    emailTime.innerHTML = stringDate;
-    anEmail.setAttribute('data-id', data.items[i].id);
-    anEmail.addEventListener('click', openEmail);
+  } else {
+    console.log('Date format not supported');
   }
-}
-
-function addIdToData(data) {
-  for (let i = 0; i < data.items.length; i++) {
-    data.items[i].id = i;
-  }
-  return data;
+  return result;
 }
 
 function toSocial(data) {
@@ -185,21 +213,19 @@ function toUpdates(data) {
 }
 
 // OPEN INDIVIDUAL EMAIL
-function openEmail(event) {
+function openEmail(event, data) {
   let currElement = event.target;
   //What is the class name of the currElement?
   //If it is bucket, star, or spam then do other funcitons and return
   //else continue executing the below code
-  let openWindowEmail = document.querySelector('.opened-email');
   let email;
   if (myData) {
+    let openWindowEmail = document.querySelector('.opened-email');
     let curID = getIdOfEmailClicked(currElement);
     myData.items[curID].isRead = true;
-    console.log(myData.items[curID]);
     removeAllFromDom();
-    listAllEmails(myData);
-    let openWindowEmail = document.querySelector('.opened-email');
-    // openWindowEmail.style.display = 'block';
+    hideMainCheckBox();
+    openWindowEmail.style.display = 'block';
     let senderName = document.querySelector('.sender-full-name');
     senderName.innerHTML = myData.items[curID].senderName;
     let emailAddress = document.querySelector('.sender-email-open');
@@ -208,7 +234,33 @@ function openEmail(event) {
     emailSubject.innerHTML = myData.items[curID].messageTitle;
     let emailMessage = document.querySelector('.message-open');
     emailMessage.innerHTML = myData.items[curID].messages[0].message;
+    let emailTime = document.querySelector('.time-date-openned');
+    let emailDate = new Date(myData.items[curID].date);
+    let stringDate = formatDate(emailDate, 'forOpennedEmail');
+    emailTime.innerHTML = stringDate;
   }
+}
+
+function hideMainCheckBox() {
+  let mainCheckBox = document.querySelector('#selectAll');
+  mainCheckBox.style.display = 'none';
+  let arrowDown = document.querySelector('.fa-caret-down');
+  arrowDown.style.display = 'none';
+  let returnButton = document.querySelector('.return');
+  returnButton.style.display = 'block';
+  returnButton.addEventListener('click', closeOpenedEmail);
+}
+
+function closeOpenedEmail() {
+  let mainCheckBox = document.querySelector('#selectAll');
+  mainCheckBox.style.display = 'block';
+  let arrowDown = document.querySelector('.fa-caret-down');
+  arrowDown.style.display = 'block';
+  let returnButton = document.querySelector('.return');
+  returnButton.style.display = 'none';
+  let openWindowEmail = document.querySelector('.opened-email');
+  openWindowEmail.style.display = 'none';
+  listAllEmails(currDisplayedData);
 }
 
 function getIdOfEmailClicked(element) {
@@ -220,6 +272,10 @@ function getIdOfEmailClicked(element) {
 }
 
 // Tool
-document.getElementById('selectAll').addEventListener('click', function(ev) {
-  ev.target.parentNode.parentNode.classList[ev.target.checked ? 'add' : 'remove']('selected');
-}, false);
+document.getElementById('selectAll').addEventListener(
+  'click',
+  function (ev) {
+    ev.target.parentNode.parentNode.classList[ev.target.checked ? 'add' : 'remove']('selected');
+  },
+  false
+);

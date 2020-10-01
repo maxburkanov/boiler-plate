@@ -250,6 +250,10 @@ body {
         display: flex;
         flex-direction: row;
         justify-content: center;
+        .return {
+          display: none;
+          margin-left: 10px;
+        }
         .email-checkbox {
           margin-left: 12px;
           display: flex;
