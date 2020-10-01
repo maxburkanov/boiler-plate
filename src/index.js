@@ -359,3 +359,24 @@ function renderToDropMenu () {
   }
 }
 
+document.getElementById('selectAll').addEventListener('click', function(ev) {
+  ev.target.parentNode.parentNode.classList[ev.target.checked ? 'add' : 'remove']('selected');
+}, false);
+
+
+//SIDEBAR
+let btnSwitch = document.querySelectorAll('.left-tag')
+
+for (let i = 0; i < btnSwitch.length; i++) {
+  btnSwitch[i].addEventListener('click', changeToAnother)
+}
+
+function changeToAnother(e) {
+  for (let i = 0; i < btnSwitch.length; i++){
+    btnSwitch[i].classList.remove('switch')
+  }
+  let el = e.currentTarget;
+  el.classList.add('switch')
+  console.log(e.currentTarget)
+
+}
