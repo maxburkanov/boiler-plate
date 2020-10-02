@@ -266,7 +266,8 @@ function closeOpenedEmail() {
 }
 
 function getIdOfEmailClicked(element) {
-  let checkedElement = element.parentElement;
+  let checkedElement = element
+  console.log(checkedElement)
   while (!checkedElement.hasAttribute('data-id')) {
     checkedElement = checkedElement.parentElement;
   }
@@ -285,14 +286,13 @@ document.getElementById('selectAll').addEventListener(
 //EVENT LISTENER FOR SEARCH BAR -- OUR LOCAL SEARCH ENGINE
 let drop = document.querySelector('.middle div')
 let searchMiddle = document.querySelector('.middle')
-
 searchBar.addEventListener('input', getSearchCriteria)
 
 function getSearchCriteria(e) {
   if (e.target.value == '') {
     dropdownForSearch.innerHTML = ''
   }
-
+  drop.style.display = 'block'
   searchedResult.items = [];
   for (let i = 0; i < myData.items.length; i++){
     for (let k in myData.items[i]){
@@ -307,19 +307,19 @@ function getSearchCriteria(e) {
         }
         
       }
-          else {
-            if (Array.isArray(myData.items[i][k])) {
-              for (let j = 0; j < myData.items[i][k].length; j++) {
-                console.log('this', myData.items[i][k])
-                 //       console.log('this',myData.items[i][k])
-                  if(myData.items[i][k][0].message.toLowerCase().includes(e.target.value.trim().toLowerCase())){
-                    searchedResult.items.push(myData.items[i])
-                  }
-              }
-            
+      else {
+        if (Array.isArray(myData.items[i][k])) {
+          for (let j = 0; j < myData.items[i][k].length; j++) {
+            // console.log('this', myData.items[i][k])
+            //       console.log('this',myData.items[i][k])
+            if(myData.items[i][k][0].message.toLowerCase().includes(e.target.value.trim().toLowerCase())){
+              searchedResult.items.push(myData.items[i])
             }
           }
-
+          
+        }
+      }
+      
     }
   }
   searchedResult.next = searchedResult.next
@@ -328,34 +328,47 @@ function getSearchCriteria(e) {
   if (!drop.classList.contains('search-drop-result')){
     drop.classList.toggle('search-drop-result')
   }
-// })
+  
   renderToDropMenu()
 }
 
 function renderToDropMenu () {
   dropdownForSearch.innerHTML = ''
-
+  
   for (let i = 0; i < searchedResult.total; i++) {
     let date = new Date(searchedResult.items[i].date)
     let div = document.createElement('div')
     div.className = 'searched-email'
     div.innerHTML = `
-      <div class="left-side">
-        <i class="fas fa-envelope"></i>
-        <div class="searched-message">
-          <div class="searched-top">
-            ${searchedResult.items[i].messageTitle}
-          </div>
-          <div class="searched-bottom">
-          ${searchedResult.items[i].senderName}
-          </div>
-        </div>
-      </div>
-      <div class="right-side">
-        ${date.getMonth()}/${date.getDate()}/${date.getFullYear()%100}
-      </div>
+    <div class="left-side">
+    <i class="fas fa-envelope"></i>
+    <div class="searched-message">
+    <div class="searched-top">
+    ${searchedResult.items[i].messageTitle}
+    </div>
+    <div class="searched-bottom">
+    ${searchedResult.items[i].senderName}
+    </div>
+    </div>
+    </div>
+    <div class="right-side">
+    ${date.getMonth()}/${date.getDate()}/${date.getFullYear()%100}
+    </div>
     `
+    div.setAttribute('data-id', searchedResult.items[i].id)
+    console.log(div.getAttribute('data-id'), 'id-match', searchedResult.items[i].id)
+    div.addEventListener('click', openEmail)
     dropdownForSearch.appendChild(div)
   }
+}
+
+searchBar.addEventListener('change', closeSearchMenu)
+
+
+function closeSearchMenu() {
+  console.log('check check check')
+  setTimeout(()=>{
+    drop.style.display = 'none'
+  }, 140)
 }
 
