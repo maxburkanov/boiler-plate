@@ -555,13 +555,15 @@ let composeButton = document.querySelector('.compose');
 let openButton = document.querySelector('.window');
 let closeButton = document.querySelector('.close-icon');
 
-composeButton.addEventListener('click',()=>{
-  openButton.classList.add("compose-window");
-})
+composeButton.addEventListener('click', () => {
+  openButton.classList.remove('window');
+  openButton.classList.add('compose-window');
+});
 
-closeButton.addEventListener('click',(e)=>{
-  openButton.classList.remove('compose-window'); 
-})
+closeButton.addEventListener('click', (e) => {
+  openButton.classList.remove('compose-window');
+  openButton.classList.add('window');
+});
 
 pageRight.addEventListener('click', listToRight);
 
