@@ -5,11 +5,16 @@ let currDisplayedData;
 let dropdownForSearch = document.querySelector('.search-displayer');
 let main = document.querySelector('.email');
 let tabs = document.querySelector('.tab');
+let mailWindow = document.querySelector('.mail-window');
 let tabsBorder = document.querySelectorAll('.bottom');
+let pageLeft = document.querySelector('.page-left');
+let pageRight = document.querySelector('.page-right');
+let pageRange = document.querySelector('.current-page');
 let social;
 let promotions;
 let updates;
 let searchedResult = {};
+let page = 1;
 const searchBar = document.querySelector('#search');
 
 for (let i = 0; i < tabs.children.length; i++) {
@@ -32,13 +37,13 @@ function onReady(fetchedData) {
   social = toSocial(myData);
   promotions = toPromotions(myData);
   updates = toUpdates(myData);
-  listAllEmails(myData);
   tabs.children[0].click();
 }
 
 //event Listener on tabs
 tabs.addEventListener('click', tabsClicked);
 function tabsClicked(e) {
+  page = 1;
   if (e.target.nodeName !== 'DIV') return;
   let curr = e.target;
   for (let i = 0; i < tabsBorder.length; i++) {
@@ -53,6 +58,8 @@ function tabsClicked(e) {
   curr.style.color = tabsColor(curr);
   curr.children[1].style.backgroundColor = tabsColor(curr);
   let data = getUndeletedEmails();
+  checkPaginationButtons(page, Math.ceil(data.items.length / 20));
+  displayPageRange(data);
   listAllEmails(data);
 }
 
@@ -105,9 +112,7 @@ function tabsColor(curr) {
 function listAllEmails(data) {
   currDisplayedData = data;
   removeAllFromDom();
-
   let list = document.querySelector('[status="template"]');
-
   let uppLimit = data.items.length > 20 ? 20 : data.items.length;
 
   for (let i = 0; i < uppLimit; i++) {
@@ -223,16 +228,21 @@ function toUpdates(data) {
 
 // OPEN INDIVIDUAL EMAIL
 function openEmail(event) {
+  currDisplayedData = detectWhichTab();
   let curID;
   let currElement = event.target;
   if (currElement.classList.contains('email-delete')) {
     curID = getIdOfEmailClicked(currElement);
     myData.items[curID].tags.isTrash = true;
     let data = getUndeletedEmails();
+    displayPageRange(data);
     listAllEmails(data);
     return;
   }
   if (myData) {
+    pageRange.innerHTML = 'not developed';
+    pageLeft.setAttribute('active', false);
+    pageRight.setAttribute('active', false);
     let openWindowEmail = document.querySelector('.opened-email');
     curID = getIdOfEmailClicked(currElement);
     myData.items[curID].isRead = true;
@@ -274,6 +284,10 @@ function closeOpenedEmail() {
   returnButton.style.display = 'none';
   let openWindowEmail = document.querySelector('.opened-email');
   openWindowEmail.style.display = 'none';
+  page = 1;
+  debugger;
+  displayPageRange(currDisplayedData);
+  checkPaginationButtons(page, Math.ceil(currDisplayedData.items.length / 20));
   listAllEmails(currDisplayedData);
 }
 
@@ -377,13 +391,27 @@ for (let i = 0; i < btnSwitch.length; i++) {
 }
 function changeToAnother(e) {
   if (e.currentTarget.classList.contains('trash')) {
+    let deleteButtons = document.querySelectorAll('.email-delete');
+    deleteButtons.forEach((value) => {
+      value.classList.add('hidden');
+    });
+    page = 1;
+    mailWindow.classList.remove(mailWindow.classList[1]);
+    mailWindow.classList.add('trash');
     tabs.style.display = 'none';
     let deletedData = getDeletedEmails();
+    displayPageRange(deletedData);
+    checkPaginationButtons(page, Math.ceil(deletedData.items.length / 20));
     listAllEmails(deletedData);
   } else if (e.currentTarget.classList.contains('inbox')) {
+    let deleteButtons = document.querySelectorAll('.email-delete');
+    deleteButtons.forEach((value) => {
+      value.classList.remove('hidden');
+    });
+    mailWindow.classList.remove(mailWindow.classList[1]);
+    mailWindow.classList.add('inbox');
     tabs.style.display = 'flex';
-    let undeletedData = getUndeletedEmails();
-    listAllEmails(undeletedData);
+    tabs.children[0].click();
   }
 
   for (let i = 0; i < btnSwitch.length; i++) {
@@ -400,7 +428,6 @@ categoriesButton.addEventListener('click', myFunction);
 
 function myFunction() {
   document.getElementById('myDropdown').classList.toggle('show');
-  console.log('hello');
 }
 
 // // Close the dropdown if the user clicks outside of it
@@ -420,28 +447,19 @@ function myFunction() {
 searchBar.addEventListener('change', closeSearchMenu);
 
 function closeSearchMenu() {
-  console.log('check check check');
   setTimeout(() => {
     drop.style.display = 'none';
   }, 140);
 }
 
 function getDeletedEmails() {
-  currDisplayedData = detectWhichTab();
   let deletedEmailsArray = [];
-  currDisplayedData.items.forEach((value) => {
+  myData.items.forEach((value) => {
     if (value.tags.isTrash) {
       deletedEmailsArray.push(value);
     }
   });
-  let deletedEmailData = {
-    items: deletedEmailsArray,
-    next: {
-      page: social.items.length < 50 ? 1 : 2,
-      limit: 50,
-    },
-    total: deletedEmailsArray.length,
-  };
+  let deletedEmailData = formInputObjectForRendering(deletedEmailsArray);
   return deletedEmailData;
 }
 
@@ -453,14 +471,7 @@ function getUndeletedEmails() {
       undeletedEmailsArray.push(value);
     }
   });
-  let undeletedEmailData = {
-    items: undeletedEmailsArray,
-    next: {
-      page: social.items.length < 50 ? 1 : 2,
-      limit: 50,
-    },
-    total: undeletedEmailsArray.length,
-  };
+  let undeletedEmailData = formInputObjectForRendering(undeletedEmailsArray);
   return undeletedEmailData;
 }
 
@@ -472,4 +483,133 @@ function updateCurrDisplayedData() {
     currDisplayedData.items[ind].tags.isStar = myData.items[indOfMyData].tags.isStar;
     currDisplayedData.items[ind].tags.isSpam = myData.items[indOfMyData].tags.isStar;
   });
+}
+
+function displayPageRange(data) {
+  let emailNum = data.items.length;
+  let totalPages = Math.ceil(emailNum / 20);
+  let total = data.items.length;
+  let start;
+  let end;
+  if (emailNum === 0) {
+    formPageRange(0, 0);
+    return;
+  } else if (totalPages === page && totalPages === 1) {
+    start = 1;
+    end = emailNum % 20;
+  } else if (page < totalPages) {
+    start = (page - 1) * 20 + 1;
+    end = start + 19;
+  } else if (page === totalPages) {
+    start = (page - 1) * 20 + 1;
+    end = start + (emailNum % 20) - 1;
+  }
+  formPageRange(start, total, end);
+}
+
+function formPageRange(start, total, end = undefined) {
+  if (end) {
+    pageRange.innerHTML = `${start} - ${end} of ${total}`;
+  } else {
+    pageRange.innerHTML = `${start} of ${total}`;
+  }
+}
+
+pageLeft.addEventListener('click', listToLeft);
+
+function listToLeft() {
+  let data;
+
+  if (mailWindow.classList.contains('inbox')) {
+    data = getUndeletedEmails();
+  } else if (mailWindow.classList.contains('trash')) {
+    data = getDeletedEmails();
+  }
+
+  let emailNum = data.items.length;
+  let totalPages = Math.ceil(emailNum / 20);
+  let start;
+  let end;
+  let dataToDisplayArray;
+  let toDisplayData;
+
+  if (page < 1) {
+    return;
+  } else if (page === 1) {
+    start = 1;
+    end = totalPages > 1 ? 20 : emailNum.num;
+  } else {
+    page--;
+    start = (page - 1) * 20;
+    end = start + 19;
+  }
+  checkPaginationButtons(page, totalPages);
+  dataToDisplayArray = data.items.slice(start, end);
+  toDisplayData = formInputObjectForRendering(dataToDisplayArray);
+  displayPageRange(data);
+  listAllEmails(toDisplayData);
+}
+
+pageRight.addEventListener('click', listToRight);
+
+function listToRight() {
+  let data;
+
+  if (mailWindow.classList.contains('inbox')) {
+    data = getUndeletedEmails();
+  } else if (mailWindow.classList.contains('trash')) {
+    data = getDeletedEmails();
+  }
+
+  let emailNum = data.items.length;
+  let totalPages = Math.ceil(emailNum / 20);
+  let start = (page - 1) * 20;
+  let end;
+  let dataToDisplayArray;
+  let toDisplayData;
+
+  if (page > totalPages) {
+    return;
+  } else if (page === totalPages) {
+    end = start + (emailNum % 20) - 1;
+  } else {
+    page++;
+    start += 20;
+    end = start + 19;
+  }
+
+  checkPaginationButtons(page, totalPages);
+  dataToDisplayArray = data.items.slice(start, end);
+  toDisplayData = formInputObjectForRendering(dataToDisplayArray);
+  displayPageRange(data);
+  listAllEmails(toDisplayData);
+}
+
+function formInputObjectForRendering(arr) {
+  let obj = {
+    items: arr,
+    next: {
+      page: social.items.length < 50 ? 1 : 2,
+      limit: 50,
+    },
+    total: arr.length,
+  };
+
+  return obj;
+}
+
+function checkPaginationButtons(page, pageNum) {
+  if (page === 1 && pageNum === 1) {
+    pageLeft.setAttribute('active', false);
+    pageRight.setAttribute('active', false);
+  } else if (page <= 1) {
+    pageLeft.setAttribute('active', false);
+    pageRight.setAttribute('active', true);
+  } else if (page >= pageNum) {
+    pageLeft.setAttribute('active', true);
+    pageRight.setAttribute('active', false);
+  } else {
+    pageLeft.setAttribute('active', true);
+    pageRight.setAttribute('active', true);
+  }
 }
