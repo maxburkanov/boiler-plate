@@ -550,6 +550,19 @@ function listToLeft() {
   listAllEmails(toDisplayData);
 }
 
+//COMPOSE MESSAGE OPEN/CLOSE
+let composeButton = document.querySelector('.compose');
+let openButton = document.querySelector('.window');
+let closeButton = document.querySelector('.close-icon');
+
+composeButton.addEventListener('click',()=>{
+  openButton.classList.add("compose-window");
+})
+
+closeButton.addEventListener('click',(e)=>{
+  openButton.classList.remove('compose-window'); 
+})
+
 pageRight.addEventListener('click', listToRight);
 
 function listToRight() {

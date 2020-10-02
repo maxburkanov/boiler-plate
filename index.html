@@ -99,7 +99,6 @@
             <span>Spam</span>
           </div> -->
         </div>
-
         <div class="meet">
           <p>Meet</p>
           <div class="left-tag">
@@ -111,7 +110,6 @@
             <span>Join a meeting</span>
           </div>
         </div>
-
         <div class="hangouts">
           <p>Hangouts</p>
           <div class="hangout-user">
@@ -144,6 +142,7 @@
           </div>
         </div>
       </aside>
+  
       <!-- END LEFT ASIDE BAR -->
       <main>
         <!-- Section tool start -->
@@ -202,6 +201,31 @@
             </div>
           </div>
         </section>
+        <!-- COMPOSE WINDOW -->
+        <div class="compose-window">
+          <div class="compose-header"><i class="fas fa-times"></i>
+            <p>New message</p>
+          </div>
+          <form onsubmit="compose-form">
+            <div class="compose-body">
+              <div class="form-group">
+                <input type="email" class="form-control" id="compose-to" placeholder="To" required/>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" id="compose-subject" placeholder="Subject" required/>
+              </div>
+              <div class="form-group">
+                <textarea class="form-content-control" id="compose-message" rows="10" required></textarea>
+              </div>
+              <div class="compose-footer">
+                <button type="button" id="close-btn" class="btn-close"></button>
+                <button type="submit" id="send-btn" class="btn-send"></button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- END COMPOSE WINDOW -->
+
         <!-- Section tool end -->
         <section class="mail-window inbox">
           <section class="tab">
@@ -312,6 +336,26 @@
             </div>
           </section>
         </section>
+         <!-- COMPOSE WINDOW -->
+         <div class="window">
+          <div class="compose-header"><div class="close-icon"><i class="fas fa-times"></i></div>
+            <p>New message</p>
+          </div>
+          <form onsubmit="compose-form">
+            <div class="compose-body">
+              <div class="form-group">
+                <input type="email" class="form-control" id="compose-to" placeholder="To" required/>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" id="compose-subject" placeholder="Subject" required/>
+              </div>
+              <div class="form-group">
+                <textarea class="form-content-control" id="compose-message" rows="10" required></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- END COMPOSE WINDOW -->
       </main>
     </div>
     <script type="text/javascript" src="./build/index.js"></script>
