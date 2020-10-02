@@ -92,10 +92,11 @@ body {
       grid-column: 1;
       img {
         margin: auto 10px;
+        color: #5f6368;
       }
       p {
         font-size: 24px;
-        color: gray;
+        color: #5f6368;
       }
     }
 
@@ -104,11 +105,18 @@ body {
       justify-content: flex-end;
       flex: 1;
       grid-column: 5;
+      
       img {
         margin: 0 10px;
-      }
+        height: 20px;
+        width: 20px;
+        margin-right: 15px;
+        opacity: 0.54;
+        border-radius:20px;
+      } 
     }
-
+       
+  
     .middle {
       grid-column: 2 / span 3;
       margin-left: 8px;
@@ -187,8 +195,7 @@ body {
 
   /* sidebar */
   .sidebar {
-    width: 220px;
-    /* border: 1px solid; */
+    width: 220px;  
     padding: 10px;
     grid-column: 1;
     color: rgb(60, 64, 67);
@@ -218,7 +225,8 @@ body {
       }
     }
     .menu {
-      min-height: 400px;
+      height: 300px;
+      overflow:scroll;
       overflow-y: auto;
       font-size: 0.875rem;
       letter-spacing: 0.2px;
@@ -244,16 +252,45 @@ body {
     }
   }
 
+  .switch {
+   background-color:#e8eaed;
+   color:#1f2124;
+   font-weight:bold;
+   border-radius:0 25px 25px 0;
+  }
+
+  //categories dropdown
+  .categories left-tag{
+  position: relative;
+  display: inline-block;
+  }
+
+  .dropdown-content {
+  display: none;
+  position: relative;
+  min-width: 160px;
+  overflow: auto;
+  z-index: 1;
+  margin-left:30px;
+    div {
+    display: block;
+    }
+  }
+
+  .show {display: block;}
+
+
   /* meet */
   .meet {
-    border-top: 2px groove lightgray;
+    border-top: 1px groove lightgray;
     border-bottom: 1px solid lightgray;
     font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
     font-size: 0.875rem;
     color: rgb(32, 33, 36);
+    
     p {
-      padding-left: 15px;
-      font-weight: bold;
+      margin-left: 10px;
+
     }
     .left-tag {
       padding: 5px;
@@ -271,8 +308,10 @@ body {
 
   /* hangouts */
   .hangouts {
-    /* border: 1px solid; */
     font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    color:#202124;
+    margin-left: 10px;
     .hangout-user {
       @extend %align-vertically;
       justify-content: space-between;
@@ -282,9 +321,10 @@ body {
       }
     }
     img {
-      height: 24px;
-      width: auto;
-      margin-right: 5px;
+      height: 16px;
+      width: 16px;
+      margin-right: 15px;
+      opacity: 0.54;
     }
   }
 
@@ -421,9 +461,10 @@ body {
         flex-direction: row;
         .current-page {
           padding: 0 17px 0 0;
-          font-size: 13px;
+          font-size: 11px;
           display: flex;
           align-items: center;
+          color:#5f6368;
         }
         .page-control {
           display: flex;
