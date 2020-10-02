@@ -416,4 +416,19 @@ function closeSearchMenu() {
   }, 140)
 }
 
+//COMPOSE MESSAGE OPEN/CLOSE
+let composeButton = document.querySelector('.compose');
+let openButton = document.querySelector('.window');
+let closeButton = document.querySelector('.close-icon');
+
+composeButton.addEventListener('click',()=>{
+  openButton.classList.add("compose-window");
+})
+
+closeButton.addEventListener('click',(e)=>{
+  openButton.classList.remove('compose-window'); 
+})
+
+
+
 
