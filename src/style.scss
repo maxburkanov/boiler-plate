@@ -68,13 +68,12 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   header {
-    
     @extend %align-vertically;
-    grid-column: 1/span 5;
+    grid-column: 1 / span 5;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     border-bottom: 1px solid #e5e5e5;
-    
+
     .header-icon {
       max-width: 20px;
       max-height: 20px;
@@ -105,18 +104,17 @@ body {
       justify-content: flex-end;
       flex: 1;
       grid-column: 5;
-      
+
       img {
         margin: 0 10px;
         height: 20px;
         width: 20px;
         margin-right: 15px;
         opacity: 0.54;
-        border-radius:20px;
-      } 
+        border-radius: 20px;
+      }
     }
-       
-  
+
     .middle {
       grid-column: 2 / span 3;
       margin-left: 8px;
@@ -164,19 +162,20 @@ body {
           justify-content: space-between;
           font-size: 14px;
           &:hover {
-            box-shadow:  1px 1px 6px 2px   $hover-background;
+            box-shadow: 1px 1px 6px 2px $hover-background;
             cursor: pointer;
           }
-          .left-side{
+          .left-side {
             display: flex;
             i {
               margin: 15px;
               color: #777;
             }
-            .searched-message{
+            .searched-message {
               // display: flex;
-              .searched-top{}
-              .searched-bottom{
+              .searched-top {
+              }
+              .searched-bottom {
                 color: #777;
                 font-size: 12px;
                 font-weight: 600;
@@ -184,10 +183,9 @@ body {
               }
             }
           }
-          .right-side{
+          .right-side {
             margin: 15px;
           }
-
         }
       }
     }
@@ -195,7 +193,7 @@ body {
 
   /* sidebar */
   .sidebar {
-    width: 220px;  
+    width: 220px;
     padding: 10px;
     grid-column: 1;
     color: rgb(60, 64, 67);
@@ -226,7 +224,7 @@ body {
     }
     .menu {
       height: 300px;
-      overflow:scroll;
+      overflow: scroll;
       overflow-y: auto;
       font-size: 0.875rem;
       letter-spacing: 0.2px;
@@ -253,32 +251,33 @@ body {
   }
 
   .switch {
-   background-color:#e8eaed;
-   color:#1f2124;
-   font-weight:bold;
-   border-radius:0 25px 25px 0;
+    background-color: #e8eaed;
+    color: #1f2124;
+    font-weight: bold;
+    border-radius: 0 25px 25px 0;
   }
 
   //categories dropdown
-  .categories left-tag{
-  position: relative;
-  display: inline-block;
+  .categories left-tag {
+    position: relative;
+    display: inline-block;
   }
 
   .dropdown-content {
-  display: none;
-  position: relative;
-  min-width: 160px;
-  overflow: auto;
-  z-index: 1;
-  margin-left:30px;
+    display: none;
+    position: relative;
+    min-width: 160px;
+    overflow: auto;
+    z-index: 1;
+    margin-left: 30px;
     div {
-    display: block;
+      display: block;
     }
   }
 
-  .show {display: block;}
-
+  .show {
+    display: block;
+  }
 
   /* meet */
   .meet {
@@ -287,10 +286,9 @@ body {
     font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
     font-size: 0.875rem;
     color: rgb(32, 33, 36);
-    
+
     p {
       margin-left: 10px;
-
     }
     .left-tag {
       padding: 5px;
@@ -310,7 +308,7 @@ body {
   .hangouts {
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
-    color:#202124;
+    color: #202124;
     margin-left: 10px;
     .hangout-user {
       @extend %align-vertically;
@@ -345,6 +343,7 @@ body {
         .return {
           display: none;
           margin-left: 10px;
+          color: #5f6368;
         }
         .email-checkbox {
           margin-left: 12px;
@@ -464,7 +463,7 @@ body {
           font-size: 11px;
           display: flex;
           align-items: center;
-          color:#5f6368;
+          color: #5f6368;
         }
         .page-control {
           display: flex;
@@ -473,15 +472,22 @@ body {
           margin: 0 17px 0 0;
           justify-content: space-between;
           flex-direction: row;
-          a {
+          div {
             font-size: 12px;
             i {
               color: #5f6368;
             }
           }
-          a:first-child {
+          div[active='false'] {
+            pointer-events: none;
             i {
               opacity: 0.6;
+            }
+          }
+          div[active='true'] {
+            cursor: pointer;
+            i {
+              opacity: 1;
             }
           }
         }
@@ -578,6 +584,9 @@ body {
             div {
               display: block;
             }
+          }
+          .email-delete.hidden {
+            display: none;
           }
         }
 

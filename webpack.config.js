@@ -1,5 +1,5 @@
 module.exports = {
-    devServer: {
-      open: true, // Open the page in browser
-    },
-  };
+  devServer: {
+    open: 'chrome', // Open the page in browser
+  },
+};
