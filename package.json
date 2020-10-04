@@ -1,9 +1,12 @@
 {
+  "homepage": "http://maxburkanov.github.io/gmail-client",
   "name": "gmail-client",
   "version": "0.1.0",
   "description": "gmail clone client",
   "main": "index.js",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "node-sass src/ -o build/ && babel src -d build",
     "start": "webpack-dev-server",
     "dev": "nodemon --exec \"npm run build\""
@@ -12,6 +15,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
+    "gh-pages": "^3.1.0",
     "nodemon": "^2.0.4"
   },
   "dependencies": {
